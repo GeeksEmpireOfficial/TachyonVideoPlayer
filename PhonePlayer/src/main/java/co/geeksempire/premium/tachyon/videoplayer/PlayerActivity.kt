@@ -32,6 +32,12 @@ class PlayerActivity : AppCompatActivity() {
 
         initializeExoPlayer(mediaUri = "https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
 
+        repeat(3) {
+
+            addMediaToPlaylist("https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
+
+        }
+
     }
 
     override fun onPause() {
@@ -50,7 +56,7 @@ class PlayerActivity : AppCompatActivity() {
                 playerLayoutBinding.videoPlayerView.player = exoPlayer
 
                 val mediaItem = MediaItem.fromUri(mediaUri)
-                exoPlayer.setMediaItem(mediaItem)
+                exoPlayer.addMediaItem(mediaItem)
 
             }
 
@@ -70,6 +76,17 @@ class PlayerActivity : AppCompatActivity() {
                 playWhenReady = this.playWhenReady
                 release()
             }
+
+        }
+
+    }
+
+    private fun addMediaToPlaylist(mediaUri: String) {
+
+        if (::exoPlayer.isInitialized) {
+
+            val mediaItem = MediaItem.fromUri(mediaUri)
+            exoPlayer.addMediaItem(mediaItem)
 
         }
 
