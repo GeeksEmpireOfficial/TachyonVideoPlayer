@@ -8,6 +8,8 @@ import com.google.android.exoplayer2.MediaItem
 
 class PlayerActivity : AppCompatActivity() {
 
+    private lateinit var exoPlayer: ExoPlayer
+
     private var playWhenReady = true
 
     private var currentWindow = 0
@@ -21,20 +23,55 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(playerLayoutBinding.root)
 
-        val simpleExoPlayer: ExoPlayer = ExoPlayer.Builder(this)
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        initializeExoPlayer(mediaUri = "https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        releaseExoPlayer()
+
+    }
+
+    private fun initializeExoPlayer(mediaUri: String) {
+
+        exoPlayer = ExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
 
                 playerLayoutBinding.videoPlayerView.player = exoPlayer
 
-                val mediaItem = MediaItem.fromUri("https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
+                val mediaItem = MediaItem.fromUri(mediaUri)
                 exoPlayer.setMediaItem(mediaItem)
 
             }
 
-        simpleExoPlayer.playWhenReady = playWhenReady
-        simpleExoPlayer.seekTo(currentWindow, playbackPosition)
-        simpleExoPlayer.prepare()
+        exoPlayer.playWhenReady = playWhenReady
+        exoPlayer.seekTo(currentWindow, playbackPosition)
+        exoPlayer.prepare()
+
+    }
+
+    private fun releaseExoPlayer() {
+
+        if (::exoPlayer.isInitialized) {
+
+            exoPlayer.run {
+                playbackPosition = this.currentPosition
+                currentWindow = this.currentWindowIndex
+                playWhenReady = this.playWhenReady
+                release()
+            }
+
+        }
 
     }
 
