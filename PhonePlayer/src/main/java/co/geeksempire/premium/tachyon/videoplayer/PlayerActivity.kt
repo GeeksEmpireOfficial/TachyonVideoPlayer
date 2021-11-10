@@ -2,6 +2,7 @@ package co.geeksempire.premium.tachyon.videoplayer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import co.geeksempire.premium.tachyon.videoplayer.databinding.PlayerLayoutBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -56,14 +57,14 @@ class PlayerActivity : AppCompatActivity() {
 
         exoPlayer.also { exoPlayer ->
 
-                playerLayoutBinding.videoPlayerView.player = exoPlayer
+            playerLayoutBinding.videoPlayerView.player = exoPlayer
 
-                addMediaToPlaylist("https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
-                addMediaToPlaylist("https://media.istockphoto.com/videos/portrait-of-highland-straight-fluffy-cat-with-long-hair-and-round-in-video-id1161210058")
-                addMediaToPlaylist("https://media.istockphoto.com/videos/drawing-watercolor-abstract-background-video-id1144161461")
-                addMediaToPlaylist("https://media.istockphoto.com/videos/pink-and-blue-ink-splash-in-super-slow-motion-video-id1269967019")
+            addMediaToPlaylist("https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
+            addMediaToPlaylist("https://media.istockphoto.com/videos/portrait-of-highland-straight-fluffy-cat-with-long-hair-and-round-in-video-id1161210058")
+            addMediaToPlaylist("https://media.istockphoto.com/videos/drawing-watercolor-abstract-background-video-id1144161461")
+            addMediaToPlaylist("https://media.istockphoto.com/videos/pink-and-blue-ink-splash-in-super-slow-motion-video-id1269967019")
 
-            }
+        }
 
         exoPlayer.playWhenReady = playWhenReady
         exoPlayer.seekTo(currentWindow, playbackPosition)
@@ -73,23 +74,40 @@ class PlayerActivity : AppCompatActivity() {
 
                 val stateString: String = when (playbackState) {
                     ExoPlayer.STATE_IDLE -> {
-                        "ExoPlayer.STATE_IDLE      -"
+
+
+
+                        "ExoPlayer.STATE_IDLE"
                     }
                     ExoPlayer.STATE_BUFFERING -> {
-                        "ExoPlayer.STATE_BUFFERING -"
+
+
+
+                        "ExoPlayer.STATE_BUFFERING"
                     }
                     ExoPlayer.STATE_READY -> {
-                        "ExoPlayer.STATE_READY     -"
+
+                        val videoPlayerLayoutParameters = playerLayoutBinding.videoPlayerView.layoutParams as ConstraintLayout.LayoutParams
+
+                        videoPlayerLayoutParameters.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
+
+                        "ExoPlayer.STATE_READY"
                     }
                     ExoPlayer.STATE_ENDED -> {
-                        "ExoPlayer.STATE_ENDED     -"
+
+
+
+                        "ExoPlayer.STATE_ENDED"
                     }
                     else -> {
-                        "UNKNOWN_STATE             -"
+
+
+
+                        "UNKNOWN_STATE"
                     }
                 }
 
-                println(">>> >> > Listener ::: $stateString")
+                println("Exo Player ::: $stateString")
 
             }
 
