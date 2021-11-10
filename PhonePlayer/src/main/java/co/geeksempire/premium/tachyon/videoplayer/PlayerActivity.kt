@@ -3,8 +3,8 @@ package co.geeksempire.premium.tachyon.videoplayer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import co.geeksempire.premium.tachyon.videoplayer.databinding.PlayerLayoutBinding
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(playerLayoutBinding.root)
 
-        val simpleExoPlayer: SimpleExoPlayer = SimpleExoPlayer.Builder(this)
+        val simpleExoPlayer: ExoPlayer = ExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
 
