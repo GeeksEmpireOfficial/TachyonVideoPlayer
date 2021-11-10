@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import co.geeksempire.premium.tachyon.videoplayer.databinding.PlayerLayoutBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.util.MimeTypes
 
@@ -73,6 +74,23 @@ class PlayerActivity : AppCompatActivity() {
 
         exoPlayer.playWhenReady = playWhenReady
         exoPlayer.seekTo(currentWindow, playbackPosition)
+        exoPlayer.addListener(object : Player.Listener {
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+
+                val stateString: String = when (playbackState) {
+                    ExoPlayer.STATE_IDLE -> "ExoPlayer.STATE_IDLE      -"
+                    ExoPlayer.STATE_BUFFERING -> "ExoPlayer.STATE_BUFFERING -"
+                    ExoPlayer.STATE_READY -> "ExoPlayer.STATE_READY     -"
+                    ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
+                    else -> "UNKNOWN_STATE             -"
+                }
+
+                println(">>> >> > Listener ::: $stateString")
+
+            }
+
+        })
         exoPlayer.prepare()
 
     }
