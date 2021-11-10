@@ -33,13 +33,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        initializeExoPlayer(mediaUri = "https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
-
-        repeat(3) {
-
-            addMediaToPlaylist("https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
-
-        }
+        initializeExoPlayer()
 
     }
 
@@ -50,7 +44,7 @@ class PlayerActivity : AppCompatActivity() {
 
     }
 
-    private fun initializeExoPlayer(mediaUri: String) {
+    private fun initializeExoPlayer() {
 
         val trackSelector = DefaultTrackSelector(this).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
@@ -59,16 +53,15 @@ class PlayerActivity : AppCompatActivity() {
         exoPlayer = ExoPlayer.Builder(this)
             .setTrackSelector(trackSelector)
             .build()
-            .also { exoPlayer ->
+
+        exoPlayer.also { exoPlayer ->
 
                 playerLayoutBinding.videoPlayerView.player = exoPlayer
 
-                val mediaItem = MediaItem.Builder()
-                    .setUri(mediaUri)
-                    .setMimeType(MimeTypes.APPLICATION_MPD)
-                    .build()
-
-                exoPlayer.addMediaItem(mediaItem)
+                addMediaToPlaylist("https://media.istockphoto.com/videos/defocused-lights-of-a-fun-fair-video-id950201516")
+                addMediaToPlaylist("https://media.istockphoto.com/videos/portrait-of-highland-straight-fluffy-cat-with-long-hair-and-round-in-video-id1161210058")
+                addMediaToPlaylist("https://media.istockphoto.com/videos/drawing-watercolor-abstract-background-video-id1144161461")
+                addMediaToPlaylist("https://media.istockphoto.com/videos/pink-and-blue-ink-splash-in-super-slow-motion-video-id1269967019")
 
             }
 
@@ -79,11 +72,21 @@ class PlayerActivity : AppCompatActivity() {
             override fun onPlaybackStateChanged(playbackState: Int) {
 
                 val stateString: String = when (playbackState) {
-                    ExoPlayer.STATE_IDLE -> "ExoPlayer.STATE_IDLE      -"
-                    ExoPlayer.STATE_BUFFERING -> "ExoPlayer.STATE_BUFFERING -"
-                    ExoPlayer.STATE_READY -> "ExoPlayer.STATE_READY     -"
-                    ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
-                    else -> "UNKNOWN_STATE             -"
+                    ExoPlayer.STATE_IDLE -> {
+                        "ExoPlayer.STATE_IDLE      -"
+                    }
+                    ExoPlayer.STATE_BUFFERING -> {
+                        "ExoPlayer.STATE_BUFFERING -"
+                    }
+                    ExoPlayer.STATE_READY -> {
+                        "ExoPlayer.STATE_READY     -"
+                    }
+                    ExoPlayer.STATE_ENDED -> {
+                        "ExoPlayer.STATE_ENDED     -"
+                    }
+                    else -> {
+                        "UNKNOWN_STATE             -"
+                    }
                 }
 
                 println(">>> >> > Listener ::: $stateString")
@@ -116,7 +119,7 @@ class PlayerActivity : AppCompatActivity() {
 
             val mediaItem = MediaItem.Builder()
                 .setUri(mediaUri)
-                .setMimeType(MimeTypes.APPLICATION_MPD)
+                .setMimeType(MimeTypes.APPLICATION_MP4)
                 .build()
 
             exoPlayer.addMediaItem(mediaItem)
