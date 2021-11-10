@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import co.geeksempire.premium.tachyon.videoplayer.databinding.PlayerLayoutBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.util.MimeTypes
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -49,13 +51,22 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun initializeExoPlayer(mediaUri: String) {
 
+        val trackSelector = DefaultTrackSelector(this).apply {
+            setParameters(buildUponParameters().setMaxVideoSizeSd())
+        }
+
         exoPlayer = ExoPlayer.Builder(this)
+            .setTrackSelector(trackSelector)
             .build()
             .also { exoPlayer ->
 
                 playerLayoutBinding.videoPlayerView.player = exoPlayer
 
-                val mediaItem = MediaItem.fromUri(mediaUri)
+                val mediaItem = MediaItem.Builder()
+                    .setUri(mediaUri)
+                    .setMimeType(MimeTypes.APPLICATION_MPD)
+                    .build()
+
                 exoPlayer.addMediaItem(mediaItem)
 
             }
@@ -85,7 +96,11 @@ class PlayerActivity : AppCompatActivity() {
 
         if (::exoPlayer.isInitialized) {
 
-            val mediaItem = MediaItem.fromUri(mediaUri)
+            val mediaItem = MediaItem.Builder()
+                .setUri(mediaUri)
+                .setMimeType(MimeTypes.APPLICATION_MPD)
+                .build()
+
             exoPlayer.addMediaItem(mediaItem)
 
         }
