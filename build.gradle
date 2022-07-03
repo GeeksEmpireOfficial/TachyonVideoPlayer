@@ -1,3 +1,13 @@
+/*
+ * Copyright © 2022 By Geeks Empire.
+ *
+ * Created by Elias Fazel
+ * Last modified 7/2/22, 6:35 PM
+ *
+ * Licensed Under MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
